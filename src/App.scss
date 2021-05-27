@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    font-family: "Gill Sans Extrabold", sans-serif;
+}
+
+.App {
+    a {
+        text-decoration: none;
+        &:link {
+            color: black;
+        }
+        &:visited {
+            color: black;
+        }
+        &:hover {
+            color: black;
+        }
+    }
+}

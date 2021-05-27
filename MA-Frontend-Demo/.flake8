@@ -1,0 +1,7 @@
+[flake8]
+max-line-length = 88
+ignore =
+    # Global to Meilleurs Agents
+    W503,
+    # For black compatibility
+    E203
