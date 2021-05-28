@@ -1,0 +1,51 @@
+.RealtorMenu {
+    height: 60px;
+    margin-left: auto;
+    background: #124080;
+
+    &__avatar {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        cursor: pointer;
+
+        img {
+            width: 32px;
+            margin: 14px 7px 14px 14px;
+            border-radius: 50%;
+        }
+
+        h3 {
+            margin: 14px 7px;
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        i {
+            margin-left: auto;
+            padding: 14px 24px 14px 7px;
+            color: #FFFFFF;
+        }
+    }
+
+    &__dropdown {
+        z-index: 1000;
+        background: #1B5098;
+
+        .RealtorMenu__avatar:hover {
+            background: #124080;
+        }
+
+        .RealtorMenu__avatar--current {
+            background: #0c2a53;
+        }
+
+        @media(max-width:480px) {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+        }
+    }
+}

@@ -36,7 +36,7 @@ function RealtorsMenu() {
         {realtors.map((realtor) => (
           <li key={realtor.id}>
             <button
-              className="RealtorMenu__avatar"
+              className={`RealtorMenu__avatar ${realtor.id === currentRealtor.id ? "RealtorMenu__avatar--current" : ""}`}
               onClick={() => { handleClickListItem(realtor); }}
               type="button"
             >
