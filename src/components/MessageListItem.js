@@ -4,15 +4,15 @@ import propTypes from "prop-types";
 import React from "react";
 
 export default function MessageListItem({
-  sender, subject, description, icon, time, read,
+  sender, subject, description, icon, time, read, active,
 }) {
   return (
-    <div className="MessageListItem">
+    <div className={`MessageListItem ${active ? "MessageListItem--active" : ""}`}>
       <h3 className="MessageListItem__sender">{sender}</h3>
       <h4>{subject}</h4>
       <span className="MessageListItem__description">{description}</span>
-      <i className={`MessageListItem__icon mypro-icon mypro-icon-${icon} ${read ? "MessageListItem__icon--active" : ""}`} />
-      <time className={`MessageListItem__time ${read ? "MessageListItem__time--active" : ""}`} dateTime={time}>{time}</time>
+      <i className={`MessageListItem__icon mypro-icon mypro-icon-${icon} ${!read ? "MessageListItem__icon--active" : ""}`} />
+      <time className={`MessageListItem__time ${!read ? "MessageListItem__time--active" : ""}`} dateTime={time}>{time}</time>
     </div>
   );
 }
@@ -24,6 +24,7 @@ MessageListItem.propTypes = {
   icon: propTypes.string,
   time: propTypes.string,
   read: propTypes.bool,
+  active: propTypes.bool,
 };
 MessageListItem.defaultProps = {
   sender: "",
@@ -32,4 +33,5 @@ MessageListItem.defaultProps = {
   icon: "",
   time: "",
   read: false,
+  active: false,
 };

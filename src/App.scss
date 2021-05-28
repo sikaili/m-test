@@ -27,15 +27,9 @@
 }
 
 .App {
-    background-color: #EEEEEE;
-
+    
     &__main {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        max-width: 960px;
         height: 100vh;
-        margin: 60px 60px auto;
     }
 
     a {

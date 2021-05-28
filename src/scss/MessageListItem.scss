@@ -5,6 +5,14 @@
     padding: 24px 32px 24px;
     background-color: #fff;
 
+    &:hover {
+        background-color: rgb(245, 245, 245);
+    }
+
+    &--active {
+        background-color: #eee;
+    }
+
     &__description {
         display: -webkit-box;
         margin-top: 8px;
