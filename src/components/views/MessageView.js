@@ -1,7 +1,7 @@
 import React from "react";
 
-import Contact from "../components/Contact";
-import MessageContent from "../components/MessageContent";
+import Contact from "../Contact";
+import MessageContent from "../MessageContent";
 
 function MessageView() {
   return (

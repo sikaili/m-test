@@ -1,6 +1,8 @@
 import "./App.scss";
+import "./assets/icons/mypro-icon.css";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Redirect,
   Route,
@@ -11,12 +13,16 @@ import { useMediaQuery } from "../node_modules/react-responsive/src";
 import Header from "./components/Header";
 import MessageList from "./components/MessageList";
 import MessageView from "./components/views/MessageView";
+import { fetchRealtors } from "./features/realtorSlice";
 
 function App() {
   const isDesktop = useMediaQuery({
-    query: "(min-device-width: 720px)",
+    query: "(min-width: 720px)",
   });
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchRealtors());
+  }, []);
   return (
     <div className="App">
       <Header />

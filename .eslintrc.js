@@ -30,5 +30,7 @@ module.exports = {
     "simple-import-sort/exports": "error",
     "import/prefer-default-export": "off",
     "import/no-named-as-default": "off",
+    "consistent-return": "off",
+    "no-shadow": "off",
   },
 };
