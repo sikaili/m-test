@@ -8,12 +8,11 @@ export default function MessageListItem({
 }) {
   return (
     <div className="MessageListItem">
-      {read}
       <h3 className="MessageListItem__sender">{sender}</h3>
       <h4>{subject}</h4>
       <span className="MessageListItem__description">{description}</span>
-      <i>{icon}</i>
-      <time className="MessageListItem__time" dateTime={time}>{time}</time>
+      <i className={`MessageListItem__icon mypro-icon mypro-icon-${icon} ${read ? "MessageListItem__icon--active" : ""}`} />
+      <time className={`MessageListItem__time ${read ? "MessageListItem__time--active" : ""}`} dateTime={time}>{time}</time>
     </div>
   );
 }
