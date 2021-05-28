@@ -1,0 +1,38 @@
+
+.MessageListItem {
+    position: relative;
+    margin: 1px;
+    padding: 24px 32px 24px;
+    background-color: #fff;
+
+    &__description {
+        display: -webkit-box;
+        margin-top: 8px;
+        overflow: hidden;
+        color: rgb(119,119,119);
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+    }
+
+    &__icon {
+        position: absolute;
+        top: 20px;
+        left: 6px;
+        color: #CCCCCC;
+
+        &--active {
+            color: #0074E4;
+        }
+    }
+
+    &__time {
+        position: absolute;
+        top: 24px;
+        right: 0;
+
+        &--active {
+            color: #0074E4;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+.Badge {
+    height: 32px;
+    padding: 0 12px;
+    overflow: hidden;
+    color: #fff;
+    line-height: 32px;
+    white-space: nowrap;
+    background-color: #C9C9C9;
+    border-radius: 8px;
+    
+    &--active {
+        background-color: #7ED321;
+    }
+}
