@@ -17,10 +17,15 @@ const initialState = {
 
 export const fetchRealtors = createAsyncThunk(
   "fetchRealtors",
-  async (url = "", { getState, dispatch }) => {
-    const response = await axios.get(`${url}/data/realtors.json`);
-    if (!getState().realtorSlice.currentRealtor) {
-      dispatch({ type: "realtor/setCurrentRealtor", payload: response.data[0] });
+  async (realtorId = 0, { getState, dispatch }) => {
+    const response = await axios.get("http://localhost:8080/realtors/");
+    if (!getState().realtorSlice.currentRealtor || realtorId) {
+      const realtors = response.data;
+      let realtor = realtors[0];
+      if (realtorId) {
+        realtor = realtors.filter((item) => item.id.toString() === realtorId)[0]; //eslint-disable-line
+      }
+      dispatch({ type: "realtor/setCurrentRealtor", payload: realtor });
     }
     return response.data;
   },
@@ -53,7 +58,7 @@ const realtorSlice = createSlice({
 });
 
 export const {
-  setRealtors, setIsLoading, setError, setCurrentRealtor, setUnreadMessageQuantity,
+  setRealtors, setCurrentRealtor,
 } = realtorSlice.actions;
 
 const selectCurrentRealtor = (state) => state.realtorSlice.currentRealtor;

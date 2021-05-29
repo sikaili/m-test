@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { selectCurrentRealtor, setCurrentRealtor } from "../features/realtorSlice";
 import { useFetch } from "../js/hooks/useFetch";
 import { usePrevious } from "../js/hooks/usePrevious";
+import Error from "./Error";
 import Loader from "./Loader";
 import MessageListItem from "./MessageListItem";
 
@@ -18,14 +19,16 @@ export default function MessageList() {
   const [currentMessageId, setCurrentMessageId] = useState("");
   const currentRealtor = useSelector(selectCurrentRealtor);
 
-  const { data, status } = useFetch(url);
+  const { data, status, error } = useFetch(url, false);
 
   const previousRealtor = usePrevious(currentRealtor);
+
   useEffect(() => {
     if (currentRealtor && currentRealtor.id && pageNo) {
       if (previousRealtor && previousRealtor.id !== currentRealtor.id) {
         setPageNo(1);
         setMessageList([]);
+        setCurrentMessageId("");
       }
       setUrl(`http://localhost:8080/realtors/${currentRealtor.id}/messages/?sort=date%3Adesc&page=${pageNo}&page_size=10`);
     }
@@ -54,19 +57,24 @@ export default function MessageList() {
       dispatch(setCurrentRealtor({
         ...currentRealtor, unread_messages: currentRealtor.unread_messages - 1,
       }));
-      const newMessageList = messageList.map((item) => {
+      setMessageList(messageList.map((item, index) => {
         if (item.id === message.id) {
-          fetch(`http://localhost:8080/realtors/${currentRealtor.id}/messages/${message.id}`, {
+          fetch(`http://localhost:8080/realtors/${currentRealtor.id}/messages/${item.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...item, read: true }),
+            body: JSON.stringify({ read: true }),
           })
-            .then((response) => response.json());
+            .catch(() => {
+              dispatch(setCurrentRealtor(previousRealtor));
+              const previousMessageList = [...messageList];
+              previousMessageList[index].read = false;
+              setMessageList(previousMessageList);
+              alert("Your connection seems to be down");
+            });
           return { ...item, read: true };
         }
         return item;
-      });
-      setMessageList(newMessageList);
+      }));
     }
   };
 
@@ -75,7 +83,7 @@ export default function MessageList() {
       {
           messageList.length > 1 && messageList.map((message) => (
             <li key={message.id}>
-              <Link onClick={() => handleClickLi(message)} to={`/message/${message.id}`}>
+              <Link onClick={() => handleClickLi(message)} to={`/realtor/${currentRealtor.id}/message/${message.id}`}>
                 <MessageListItem
                   subject={`${message.contact.firstname} ${message.contact.lastname}`}
                   description={message.body}
@@ -91,6 +99,7 @@ export default function MessageList() {
       <div ref={sentryRef}>
         {status === "fetching" && <Loader />}
       </div>
+      {error && <Error message={error} />}
     </ul>
   );
 }
