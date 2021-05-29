@@ -3,6 +3,7 @@ import "../scss/RealtorsMenu.scss";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive/src";
+import { useHistory } from "react-router-dom";
 
 import { selectCurrentRealtor, selectRealtors, setCurrentRealtor } from "../features/realtorSlice";
 import { useOnClickOutside } from "../js/hooks/useOnClickOutside";
@@ -16,9 +17,11 @@ function RealtorsMenu() {
   const dispatch = useDispatch();
   const currentRealtor = useSelector(selectCurrentRealtor);
   const [showMenu, setShowMenu] = useState(false);
+  const history = useHistory();
   const handleClickListItem = (realtor) => {
     dispatch(setCurrentRealtor(realtor));
     setShowMenu(false);
+    history.push(`/realtor/${realtor.id}`);
   };
   useOnClickOutside(ref, () => { setShowMenu(false); });
   return (

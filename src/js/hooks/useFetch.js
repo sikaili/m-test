@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef } from "react";
 
-export const useFetch = (url) => {
+export const useFetch = (url, shouldCache = true) => {
   const cache = useRef({});
 
   const initialState = {
@@ -28,7 +28,7 @@ export const useFetch = (url) => {
 
     const fetchData = async () => {
       dispatch({ type: "FETCHING" });
-      if (cache.current[url]) {
+      if (cache.current[url] && shouldCache) {
         const data = cache.current[url];
         dispatch({ type: "FETCHED", payload: data });
       } else {

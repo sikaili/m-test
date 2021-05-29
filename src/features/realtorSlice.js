@@ -23,7 +23,8 @@ export const fetchRealtors = createAsyncThunk(
       const realtors = response.data;
       let realtor = realtors[0];
       if (realtorId) {
-        realtor = realtors.filter((item) => item.id.toString() === realtorId)[0]; //eslint-disable-line
+        const foundRealtor = realtors.filter((item) => item.id.toString() === realtorId)[0];
+        realtor = foundRealtor || realtor;
       }
       dispatch({ type: "realtor/setCurrentRealtor", payload: realtor });
     }
