@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useFetch } from "../js/hooks/useFetch";
 import { usePrevious } from "../js/hooks/usePrevious";
 import { selectCurrentRealtor, setCurrentRealtor } from "../store/features/realtorSlice";
-import Error from "./Error";
+import ErrorBanner from "./ErrorBanner";
 import Loader from "./Loader";
 import MessageListItem from "./MessageListItem";
 
@@ -100,7 +100,7 @@ export default function MessageList() {
         {status === "fetching" && <Loader />}
         {(status !== "fetching" && !error && data.length < 1 && messageList.length > 0) && <div style={{ textAlign: "center" }}>No more messages</div>}
       </div>
-      {error && <Error message={error} />}
+      {error && <ErrorBanner message={error} />}
     </ul>
   );
 }

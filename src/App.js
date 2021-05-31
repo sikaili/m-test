@@ -11,11 +11,11 @@ import {
 } from "react-router-dom";
 
 import { useMediaQuery } from "../node_modules/react-responsive/src";
-import Error from "./components/Error";
+import ErrorBanner from "./components/ErrorBanner";
 import Header from "./components/Header";
 import MessageList from "./components/MessageList";
 import { fetchRealtors, selectError } from "./store/features/realtorSlice";
-import MessageView from "./views/MessageView";
+import MessageView from "./view/MessageView";
 
 function App() {
   const isDesktop = useMediaQuery({
@@ -46,7 +46,7 @@ function App() {
           </Route>
           <Redirect to="/" />
         </Switch>
-        {error && <Error message={error} />}
+        {error && <ErrorBanner message={error} />}
       </main>
     </div>
   );

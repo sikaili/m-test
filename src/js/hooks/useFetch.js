@@ -42,7 +42,6 @@ export const useFetch = (url, shouldCache = true) => {
         try {
           const response = await fetch(url);
           if (!response.ok) {
-            console.log(response);
             dispatch({ type: "FETCH_ERROR", payload: `${response.status} ${response.statusText}` });
             return;
           }

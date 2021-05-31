@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import Contact from "../components/Contact";
-import Error from "../components/Error";
+import ErrorBanner from "../components/ErrorBanner";
 import Loader from "../components/Loader";
 import MessageContent from "../components/MessageContent";
 import { useFetch } from "../js/hooks/useFetch";
@@ -40,7 +40,7 @@ function MessageView() {
           )
       }
       {status === "fetching" && <Loader />}
-      {error && <Error message={`${error} message`} />}
+      {error && <ErrorBanner message={`${error} message`} />}
     </div>
   );
 }
