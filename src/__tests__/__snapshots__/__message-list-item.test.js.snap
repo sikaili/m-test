@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="MessageListItem "
+>
+  <h3
+    className="MessageListItem__sender"
+  >
+    Tom
+  </h3>
+  <h4>
+    
+  </h4>
+  <span
+    className="MessageListItem__description"
+  >
+    
+  </span>
+  <i
+    className="MessageListItem__icon mypro-icon mypro-icon- MessageListItem__icon--active"
+  />
+  <time
+    className="MessageListItem__time MessageListItem__time--active"
+    dateTime="2021-05-10T08:16:07.049461"
+  >
+    10/05/2021
+  </time>
+</div>
+`;

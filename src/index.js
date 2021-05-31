@@ -9,9 +9,8 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store/store";
 
 store.subscribe(() => {
-  saveToLocalStorage("state", store.getState());
+  saveToLocalStorage("state", { ...store.getState(), realtorSlice: { error: "", isLoading: false } });
 });
-
 ReactDOM.render(
   <React.StrictMode>
     <Router>
