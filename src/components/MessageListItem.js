@@ -3,6 +3,8 @@ import "../scss/MessageListItem.scss";
 import propTypes from "prop-types";
 import React from "react";
 
+import { formatTime } from "../js/helpers";
+
 export default function MessageListItem({
   sender, subject, description, icon, time, read, active,
 }) {
@@ -12,7 +14,7 @@ export default function MessageListItem({
       <h4>{subject}</h4>
       <span className="MessageListItem__description">{description}</span>
       <i className={`MessageListItem__icon mypro-icon mypro-icon-${icon} ${!read ? "MessageListItem__icon--active" : ""}`} />
-      <time className={`MessageListItem__time ${!read ? "MessageListItem__time--active" : ""}`} dateTime={time}>{time}</time>
+      <time className={`MessageListItem__time ${!read ? "MessageListItem__time--active" : ""}`} dateTime={time}>{formatTime(time)}</time>
     </div>
   );
 }

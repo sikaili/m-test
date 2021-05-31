@@ -7,6 +7,8 @@ function Error({ message }) {
   return (
     <div className="Error">
       {message}
+      {" "}
+      <button type="button" onClick={() => window.location.reload()}>Click to refresh</button>
     </div>
   );
 }

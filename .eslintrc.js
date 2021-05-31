@@ -32,5 +32,6 @@ module.exports = {
     "import/no-named-as-default": "off",
     "consistent-return": "off",
     "no-shadow": "off",
+    "import/no-extraneous-dependencies": "off",
   },
 };

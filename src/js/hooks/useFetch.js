@@ -17,6 +17,10 @@ export const useFetch = (url, shouldCache = true) => {
         return { ...initialState, status: "fetched", data: action.payload };
       case "FETCH_ERROR":
         return { ...initialState, status: "error", error: action.payload };
+      case "REMOVE_DATA":
+        return {
+          ...initialState, status: "idle", data: [], error: null,
+        };
       default:
         return state;
     }
@@ -24,7 +28,10 @@ export const useFetch = (url, shouldCache = true) => {
 
   useEffect(() => {
     let cancelRequest = false;
-    if (!url) return;
+    if (!url) {
+      dispatch({ type: "REMOVE_DATA" });
+      return;
+    }
 
     const fetchData = async () => {
       dispatch({ type: "FETCHING" });
@@ -34,7 +41,13 @@ export const useFetch = (url, shouldCache = true) => {
       } else {
         try {
           const response = await fetch(url);
+          if (!response.ok) {
+            console.log(response);
+            dispatch({ type: "FETCH_ERROR", payload: `${response.status} ${response.statusText}` });
+            return;
+          }
           const data = await response.json();
+
           cache.current[url] = data;
           if (cancelRequest) return;
           dispatch({ type: "FETCHED", payload: data });

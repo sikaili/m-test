@@ -1,10 +1,3 @@
-/*
-  common state
-    selected realtor (id)
-    unread messages number
-    current message id ?
-    isLoading
-*/
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -18,7 +11,12 @@ const initialState = {
 export const fetchRealtors = createAsyncThunk(
   "fetchRealtors",
   async (realtorId = 0, { getState, dispatch }) => {
-    const response = await axios.get("http://localhost:8080/realtors/");
+    let response;
+    try {
+      response = await axios.get(`${process.env.REACT_APP_BASE_URL}/realtors/`);
+    } catch (err) {
+      //
+    }
     if (!getState().realtorSlice.currentRealtor || realtorId) {
       const realtors = response.data;
       let realtor = realtors[0];
@@ -46,14 +44,16 @@ const realtorSlice = createSlice({
   extraReducers: {
     [fetchRealtors.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.error = "";
       state.realtors = action.payload;
     },
     [fetchRealtors.rejected]: (state) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.error = "failed to load realtors";
     },
     [fetchRealtors.pending]: (state) => {
       state.isLoading = true;
+      state.error = "";
     },
   },
 });
@@ -65,7 +65,10 @@ export const {
 const selectCurrentRealtor = (state) => state.realtorSlice.currentRealtor;
 const selectRealtors = (state) => state.realtorSlice.realtors;
 const selectUnreadMessageNumber = (state) => (state.realtorSlice.currentRealtor ? state.realtorSlice.currentRealtor.unread_messages : "");
+const selectError = (state) => state.realtorSlice.error;
 
-export { selectCurrentRealtor, selectRealtors, selectUnreadMessageNumber };
+export {
+  selectCurrentRealtor, selectError, selectRealtors, selectUnreadMessageNumber,
+};
 
 export default realtorSlice.reducer;

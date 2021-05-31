@@ -1,8 +1,8 @@
-import "./App.scss";
+import "./scss/App.scss";
 import "./assets/icons/mypro-icon.css";
 
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Redirect,
   Route,
@@ -11,10 +11,11 @@ import {
 } from "react-router-dom";
 
 import { useMediaQuery } from "../node_modules/react-responsive/src";
+import Error from "./components/Error";
 import Header from "./components/Header";
 import MessageList from "./components/MessageList";
-import MessageView from "./components/views/MessageView";
-import { fetchRealtors } from "./features/realtorSlice";
+import { fetchRealtors, selectError } from "./store/features/realtorSlice";
+import MessageView from "./views/MessageView";
 
 function App() {
   const isDesktop = useMediaQuery({
@@ -22,12 +23,14 @@ function App() {
   });
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const error = useSelector(selectError);
 
   useEffect(() => {
     const arr = pathname.split("/");
     const hasRealtorParam = arr[1] === "realtor" && arr[2];
     dispatch(fetchRealtors(hasRealtorParam ? arr[2] : 0));
   }, []);
+
   return (
     <div className="App">
       <Header />
@@ -38,12 +41,12 @@ function App() {
             {isDesktop && <MessageView />}
           </Route>
           <Route path="/realtor/:realtorId/message/:messageId">
-            {isDesktop
-              && <MessageList />}
+            <MessageList style={{ display: !isDesktop ? "none" : "" }} />
             <MessageView />
           </Route>
           <Redirect to="/" />
         </Switch>
+        {error && <Error message={error} />}
       </main>
     </div>
   );

@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import realtorSlice from "../features/realtorSlice";
 import { getLocalStorage } from "../js/helpers";
+import realtorSlice from "./features/realtorSlice";
 
 const reducer = {
   realtorSlice,

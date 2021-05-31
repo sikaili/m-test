@@ -10,7 +10,7 @@
     }
 
     &--active {
-        background-color: #eee;
+        background-color: rgb(202, 216, 255);
     }
 
     &__description {
@@ -37,7 +37,8 @@
     &__time {
         position: absolute;
         top: 24px;
-        right: 0;
+        right: 8px;
+        color: #7a7a7a;
 
         &--active {
             color: #0074E4;

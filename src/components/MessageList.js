@@ -5,9 +5,9 @@ import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { selectCurrentRealtor, setCurrentRealtor } from "../features/realtorSlice";
 import { useFetch } from "../js/hooks/useFetch";
 import { usePrevious } from "../js/hooks/usePrevious";
+import { selectCurrentRealtor, setCurrentRealtor } from "../store/features/realtorSlice";
 import Error from "./Error";
 import Loader from "./Loader";
 import MessageListItem from "./MessageListItem";
@@ -30,7 +30,7 @@ export default function MessageList() {
         setMessageList([]);
         setCurrentMessageId("");
       }
-      setUrl(`http://localhost:8080/realtors/${currentRealtor.id}/messages/?sort=date%3Adesc&page=${pageNo}&page_size=10`);
+      setUrl(`${process.env.REACT_APP_BASE_URL}/realtors/${currentRealtor.id}/messages/?sort=date%3Adesc&page=${pageNo}&page_size=10`);
     }
   }, [currentRealtor, pageNo]);
 
@@ -44,7 +44,7 @@ export default function MessageList() {
 
   const [sentryRef] = useInfiniteScroll({
     loading: status === "fetching",
-    hasNextPage: data.length > 1,
+    hasNextPage: data.length > 0 && !error,
     onLoadMore: () => {
       setPageNo(pageNo + 1);
     },
@@ -59,7 +59,7 @@ export default function MessageList() {
       }));
       setMessageList(messageList.map((item, index) => {
         if (item.id === message.id) {
-          fetch(`http://localhost:8080/realtors/${currentRealtor.id}/messages/${item.id}`, {
+          fetch(`${process.env.REACT_APP_BASE_URL}/realtors/${currentRealtor.id}/messages/${item.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ read: true }),
@@ -69,7 +69,7 @@ export default function MessageList() {
               const previousMessageList = [...messageList];
               previousMessageList[index].read = false;
               setMessageList(previousMessageList);
-              alert("Your connection seems to be down");
+              alert("Your connection seems to be down"); //eslint-disable-line
             });
           return { ...item, read: true };
         }
@@ -98,6 +98,7 @@ export default function MessageList() {
         }
       <div ref={sentryRef}>
         {status === "fetching" && <Loader />}
+        {(status !== "fetching" && !error && data.length < 1 && messageList.length > 0) && <div style={{ textAlign: "center" }}>No more messages</div>}
       </div>
       {error && <Error message={error} />}
     </ul>
